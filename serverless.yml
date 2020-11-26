@@ -11,7 +11,7 @@ frameworkVersion: '2'
 provider:
   name: aws
   runtime: python3.8
-  region: us-east-1
+  region: us-east-2
 
   deploymentBucket:
     name: reisparcovidbucket
@@ -23,7 +23,9 @@ provider:
       Resource:
         - "arn:aws:s3:::reisparcovidbucket/*"
 
-
+custom:
+  pythonRequirements:
+    slim: true
 
 
 # you can overwrite defaults here

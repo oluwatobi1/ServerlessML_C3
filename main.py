@@ -37,16 +37,16 @@ def get_modelandweight():
     model = Model(inputs=base_model.input, outputs=predictions)
     # The model weights (that are considered the best) are loaded into the model
     #edit model name directory 
-    # with BytesIO() as weight:  
-    #     bucket.download_file("model/EfficientNetB6.h5", "weight.h5")
-    model.load_weights("weight.h5")
-        # os.remove("weight.h5")
+    with BytesIO() as weight:  
+        bucket.download_file("model/EfficientNetB6.h5", "weight.h5")
+        model.load_weights("weight.h5")
+        os.remove("weight.h5")
 
 
     return model
 
 def predict(event):    
-    name = eval(event)
+    name = event['body']['name']
     if os.path.exists(os.path.join('', name["body"])):
         image = os.path.join('', name["body"])
         print(name["body"], ' >... event body Found')
@@ -61,7 +61,7 @@ def predict(event):
 
 
 def lambda_handler(event, context):
-    print(event, "... Event")
+    print(event)
     ans = predict(event)
     return {'statusCode':200, 
             'body':ans}
